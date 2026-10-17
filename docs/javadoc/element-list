@@ -1,0 +1,7 @@
+br.edu.catalogo.config
+br.edu.catalogo.dao
+br.edu.catalogo.exception
+br.edu.catalogo.launcher
+br.edu.catalogo.model
+br.edu.catalogo.service
+br.edu.catalogo.web

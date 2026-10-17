@@ -1,0 +1,8 @@
+.tools/
+.m2/
+target/
+data/
+.runtime/
+__pycache__/
+*.log
+entrega/*.zip

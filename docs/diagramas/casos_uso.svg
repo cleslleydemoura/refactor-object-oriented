@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+<rect width="1200" height="760" fill="#fffdf8"/>
+<text x="35" y="55" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#203c30">Casos de uso — Acervo</text>
+<rect x="370" y="90" width="770" height="600" rx="10" fill="#f6f4ed" stroke="#627369"/>
+<text x="645" y="131" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#203c30">Catálogo pessoal</text>
+<circle cx="140" cy="349" r="24" fill="none" stroke="#203c30" stroke-width="3"/>
+<line x1="140" y1="373" x2="140" y2="460" stroke="#627369" stroke-width="2" />
+<line x1="95" y1="405" x2="185" y2="405" stroke="#627369" stroke-width="2" />
+<line x1="140" y1="460" x2="105" y2="510" stroke="#627369" stroke-width="2" />
+<line x1="140" y1="460" x2="175" y2="510" stroke="#627369" stroke-width="2" />
+<text x="45" y="555" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#203c30">Usuário do catálogo</text>
+<line x1="190" y1="405" x2="430" y2="186" stroke="#627369" stroke-width="2" />
+<ellipse cx="755.0" cy="186.0" rx="325.0" ry="31.0" fill="#e8eddb" stroke="#627369"/>
+<text x="455" y="193" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#203c30">Cadastrar obra</text>
+<line x1="190" y1="405" x2="430" y2="268" stroke="#627369" stroke-width="2" />
+<ellipse cx="755.0" cy="268.0" rx="325.0" ry="31.0" fill="#e8eddb" stroke="#627369"/>
+<text x="455" y="275" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#203c30">Listar coleção</text>
+<line x1="190" y1="405" x2="430" y2="350" stroke="#627369" stroke-width="2" />
+<ellipse cx="755.0" cy="350.0" rx="325.0" ry="31.0" fill="#e8eddb" stroke="#627369"/>
+<text x="455" y="357" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#203c30">Buscar título ou autor/diretor</text>
+<line x1="190" y1="405" x2="430" y2="432" stroke="#627369" stroke-width="2" />
+<ellipse cx="755.0" cy="432.0" rx="325.0" ry="31.0" fill="#e8eddb" stroke="#627369"/>
+<text x="455" y="439" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#203c30">Visualizar detalhes</text>
+<line x1="190" y1="405" x2="430" y2="514" stroke="#627369" stroke-width="2" />
+<ellipse cx="755.0" cy="514.0" rx="325.0" ry="31.0" fill="#e8eddb" stroke="#627369"/>
+<text x="455" y="521" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#203c30">Editar obra</text>
+<line x1="190" y1="405" x2="430" y2="596" stroke="#627369" stroke-width="2" />
+<ellipse cx="755.0" cy="596.0" rx="325.0" ry="31.0" fill="#e8eddb" stroke="#627369"/>
+<text x="455" y="603" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#203c30">Excluir com confirmação</text>
+</svg>

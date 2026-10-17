@@ -1,0 +1,57 @@
+classDiagram
+  class ItemMidia {
+    -Long id
+    -String titulo
+    -String autorDiretor
+    -int anoLancamento
+    -String genero
+    -String sinopse
+    -TipoMidia tipoMidia
+    +comId(long) ItemMidia
+    +getTitulo() String
+  }
+  class TipoMidia {
+    <<enumeration>>
+    LIVRO
+    FILME
+    SERIE
+  }
+  class ItemMidiaServlet {
+    -ItemMidiaService servico
+    +doGet(request, response)
+    +doPost(request, response)
+  }
+  class ItemMidiaService {
+    -ItemMidiaDao dao
+    -Clock relogio
+    +salvar(Long, Map) ItemMidia
+    +buscar(String) List
+    +obter(long) ItemMidia
+    +excluir(long)
+  }
+  class ItemMidiaDao {
+    <<interface>>
+    +inserir(ItemMidia) ItemMidia
+    +buscar(String) List
+    +buscarPorId(long) Optional
+    +atualizar(ItemMidia) boolean
+    +excluir(long) boolean
+  }
+  class JdbcItemMidiaDao
+  class ItemMidiaDaoEmMemoria {
+    <<test double>>
+  }
+  class FabricaConexao {
+    <<interface>>
+    +abrir() Connection
+  }
+  class ConexaoJdbc
+  ItemMidiaServlet --> ItemMidiaService
+  ItemMidiaService --> ItemMidiaDao
+  JdbcItemMidiaDao ..|> ItemMidiaDao
+  ItemMidiaDaoEmMemoria ..|> ItemMidiaDao
+  JdbcItemMidiaDao --> FabricaConexao
+  ConexaoJdbc ..|> FabricaConexao
+  ItemMidiaService ..> ItemMidia
+  JdbcItemMidiaDao ..> ItemMidia
+  ItemMidia --> TipoMidia
