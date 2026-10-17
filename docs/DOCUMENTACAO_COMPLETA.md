@@ -1,18 +1,6 @@
 # Projeto de intervenção — Situação-Problema 3
 
-Nome: ____________________________________________________________
-
-RGM: _____________________________________________________________
-
-Qual situação-problema você escolheu para criar o seu projeto de intervenção?
-
-☐ Situação-problema 1
-
-☐ Situação-problema 2
-
-☒ Situação-problema 3
-
-## A Situação-Problema escolhida:
+# A Situação-Problema escolhida:
 
 Refatoração e Orientação a Objetos. No cenário apresentado, um estudante implementou o cadastro, a listagem, a consulta de detalhes, a edição, a exclusão e a busca de um Catálogo Simples de Livros/Filmes diretamente em uma Servlet. Essa concentração de responsabilidades produziu um código extenso, difícil de compreender e manter, com repetição de operações de acesso ao banco de dados. A intervenção consiste em reorganizar o catálogo utilizando orientação a objetos e separação de responsabilidades, preservando as funcionalidades exigidas.
 
