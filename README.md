@@ -85,3 +85,10 @@ Esse utilitário usa apenas a biblioteca padrão do Python. Os resumos são text
 `mvn package` gera `target/catalogo.war`. Copie-o para `webapps` de um Tomcat **10.1**, executando com JDK 17+, e acesse `http://localhost:8080/catalogo/itens`. Não use Tomcat 9: seus pacotes `javax.servlet` são diferentes de `jakarta.servlet`. A persistência relativa ao diretório de trabalho do servidor pode ser substituída por uma URL H2 absoluta. O WAR não contém as bibliotecas Tomcat usadas pelo inicializador local.
 
 As especificações adotadas são documentadas oficialmente por [Apache Tomcat](https://tomcat.apache.org/tomcat-10.1-doc/index.html), [Jakarta Tags](https://jakarta.ee/specifications/tags/3.0/) e [H2](https://h2database.com/html/features.html). As versões exatas da entrega estão fixadas em `pom.xml`.
+
+## Telas do sistema
+
+<img width="1600" height="883" alt="WhatsApp Image 2026-10-17 at 17 03 48" src="https://github.com/user-attachments/assets/935f5fc7-3bf1-4b59-aee8-0e1d80602019" />
+<img width="1600" height="886" alt="WhatsApp Image 2026-10-17 at 17 03 26" src="https://github.com/user-attachments/assets/3529640f-1892-45a2-88b0-9dabfbad1262" />
+<img width="1600" height="881" alt="WhatsApp Image 2026-10-17 at 17 04 06" src="https://github.com/user-attachments/assets/66d60184-b796-4672-8394-00fa87ab7ef2" />
+
