@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"br.edu.catalogo.config"},{"l":"br.edu.catalogo.dao"},{"l":"br.edu.catalogo.exception"},{"l":"br.edu.catalogo.launcher"},{"l":"br.edu.catalogo.model"},{"l":"br.edu.catalogo.service"},{"l":"br.edu.catalogo.web"}];updateSearchResults();

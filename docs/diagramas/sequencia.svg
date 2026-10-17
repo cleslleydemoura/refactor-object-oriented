@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000">
+<rect width="1500" height="1000" fill="#fffdf8"/>
+<text x="35" y="55" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#203c30">Sequência — cadastro válido</text>
+<rect x="25" y="90" width="200" height="65" rx="10" fill="#edf1e2" stroke="#627369"/>
+<text x="37" y="132" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#203c30">Navegador</text>
+<line x1="125" y1="155" x2="125" y2="920" stroke="#627369" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="275" y="90" width="200" height="65" rx="10" fill="#edf1e2" stroke="#627369"/>
+<text x="287" y="132" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#203c30">Filtro CSRF</text>
+<line x1="375" y1="155" x2="375" y2="920" stroke="#627369" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="525" y="90" width="200" height="65" rx="10" fill="#edf1e2" stroke="#627369"/>
+<text x="537" y="132" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#203c30">Servlet</text>
+<line x1="625" y1="155" x2="625" y2="920" stroke="#627369" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="775" y="90" width="200" height="65" rx="10" fill="#edf1e2" stroke="#627369"/>
+<text x="787" y="132" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#203c30">Serviço</text>
+<line x1="875" y1="155" x2="875" y2="920" stroke="#627369" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="1025" y="90" width="200" height="65" rx="10" fill="#edf1e2" stroke="#627369"/>
+<text x="1037" y="132" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#203c30">DAO JDBC</text>
+<line x1="1125" y1="155" x2="1125" y2="920" stroke="#627369" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="1275" y="90" width="200" height="65" rx="10" fill="#edf1e2" stroke="#627369"/>
+<text x="1287" y="132" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#203c30">H2</text>
+<line x1="1375" y1="155" x2="1375" y2="920" stroke="#627369" stroke-width="2" stroke-dasharray="7 5"/>
+<line x1="125" y1="205" x2="375" y2="205" stroke="#627369" stroke-width="2" />
+<polygon points="375.0,205.0 363.3,210.7 363.3,199.3" fill="#627369"/>
+<text x="135" y="196" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">POST salvar + campos + token</text>
+<line x1="375" y1="264" x2="625" y2="264" stroke="#627369" stroke-width="2" />
+<polygon points="625.0,264.0 613.3,269.7 613.3,258.3" fill="#627369"/>
+<text x="385" y="255" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">Token válido</text>
+<line x1="625" y1="323" x2="875" y2="323" stroke="#627369" stroke-width="2" />
+<polygon points="875.0,323.0 863.3,328.7 863.3,317.3" fill="#627369"/>
+<text x="635" y="314" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">salvar(null, campos)</text>
+<line x1="875" y1="382" x2="1015" y2="382" stroke="#627369" stroke-width="2" />
+<line x1="1015" y1="382" x2="1015" y2="404" stroke="#627369" stroke-width="2" />
+<line x1="1015" y1="404" x2="875" y2="404" stroke="#627369" stroke-width="2" />
+<polygon points="875.0,404.0 886.7,398.3 886.7,409.7" fill="#627369"/>
+<text x="885" y="370" font-family="Arial,sans-serif" font-size="16" font-weight="400" fill="#203c30">Normaliza e valida</text>
+<line x1="875" y1="441" x2="1125" y2="441" stroke="#627369" stroke-width="2" />
+<polygon points="1125.0,441.0 1113.3,446.7 1113.3,435.3" fill="#627369"/>
+<text x="885" y="432" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">inserir(item)</text>
+<line x1="1125" y1="500" x2="1375" y2="500" stroke="#627369" stroke-width="2" />
+<polygon points="1375.0,500.0 1363.3,505.7 1363.3,494.3" fill="#627369"/>
+<text x="1135" y="491" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">INSERT com parâmetros</text>
+<line x1="1375" y1="559" x2="1125" y2="559" stroke="#627369" stroke-width="2" />
+<polygon points="1125.0,559.0 1136.7,553.3 1136.7,564.7" fill="#627369"/>
+<text x="1135" y="550" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">Chave gerada</text>
+<line x1="1125" y1="618" x2="875" y2="618" stroke="#627369" stroke-width="2" />
+<polygon points="875.0,618.0 886.7,612.3 886.7,623.7" fill="#627369"/>
+<text x="885" y="609" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">Item com ID</text>
+<line x1="875" y1="677" x2="625" y2="677" stroke="#627369" stroke-width="2" />
+<polygon points="625.0,677.0 636.7,671.3 636.7,682.7" fill="#627369"/>
+<text x="635" y="668" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">Item persistido</text>
+<line x1="625" y1="736" x2="125" y2="736" stroke="#627369" stroke-width="2" />
+<polygon points="125.0,736.0 136.7,730.3 136.7,741.7" fill="#627369"/>
+<text x="135" y="727" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">303 → GET detalhes</text>
+<line x1="125" y1="795" x2="625" y2="795" stroke="#627369" stroke-width="2" />
+<polygon points="625.0,795.0 613.3,800.7 613.3,789.3" fill="#627369"/>
+<text x="135" y="786" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">GET detalhes?id=...</text>
+<line x1="625" y1="854" x2="125" y2="854" stroke="#627369" stroke-width="2" />
+<polygon points="125.0,854.0 136.7,848.3 136.7,859.7" fill="#627369"/>
+<text x="135" y="845" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#203c30">HTML renderizado pela JSP</text>
+<text x="35" y="965" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">O GET de detalhes consulta serviço/DAO/banco antes de renderizar a JSP (fluxo completo no fonte Mermaid).</text>
+</svg>

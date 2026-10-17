@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="690" viewBox="0 0 1100 690">
+<rect width="1100" height="690" fill="#fffdf8"/>
+<text x="35" y="55" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#203c30">Modelo de dados — uma entidade principal</text>
+<rect x="100" y="105" width="900" height="460" rx="10" fill="#edf1e2" stroke="#627369"/>
+<text x="115" y="139" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#203c30">ITEM_MIDIA</text>
+<line x1="100" y1="153" x2="1000" y2="153" stroke="#627369" stroke-width="2" />
+<text x="115" y="185" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">PK  id                  BIGINT IDENTITY</text>
+<text x="115" y="214" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">     titulo              VARCHAR(255) NOT NULL</text>
+<text x="115" y="243" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">     autor_diretor        VARCHAR(255) NOT NULL</text>
+<text x="115" y="272" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">     ano_lancamento       INTEGER NOT NULL; CHECK 1..9999</text>
+<text x="115" y="301" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">     genero              VARCHAR(100) NOT NULL</text>
+<text x="115" y="330" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">     sinopse             VARCHAR(2000) NOT NULL</text>
+<text x="115" y="359" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">     tipo_midia          VARCHAR(10) NOT NULL</text>
+<text x="115" y="388" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">CHECK tipo_midia IN (&#x27;LIVRO&#x27;, &#x27;FILME&#x27;, &#x27;SERIE&#x27;)</text>
+<text x="115" y="417" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#203c30">CHECK CHAR_LENGTH(TRIM(texto)) &gt; 0 nos campos textuais</text>
+<text x="100" y="620" font-family="Arial,sans-serif" font-size="20" font-weight="400" fill="#203c30">Não há chaves estrangeiras: o escopo atual utiliza uma única tabela.</text>
+</svg>

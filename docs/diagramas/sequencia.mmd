@@ -1,0 +1,26 @@
+sequenceDiagram
+  actor U as Usuário
+  participant F as Filtro
+  participant C as Servlet
+  participant S as Serviço
+  participant D as DAO JDBC
+  participant B as Banco H2
+  U->>F: POST /itens/salvar + campos + token
+  F->>F: Confere token CSRF
+  F->>C: Requisição válida
+  C->>S: salvar(null, campos)
+  S->>S: Normaliza e valida
+  S->>D: inserir(item)
+  D->>B: INSERT parametrizado
+  B-->>D: ID gerado
+  D-->>S: Item com ID
+  S-->>C: Item persistido
+  C-->>U: 303 Location /itens/detalhes?id=...
+  U->>C: GET detalhes
+  C->>S: obter(id)
+  S->>D: buscarPorId(id)
+  D->>B: SELECT parametrizado
+  B-->>D: Registro
+  D-->>S: Item
+  S-->>C: Item
+  C-->>U: JSP renderizada em HTML

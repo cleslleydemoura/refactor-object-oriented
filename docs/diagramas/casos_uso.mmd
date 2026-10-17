@@ -1,0 +1,16 @@
+flowchart LR
+  U["Usuário do catálogo"]
+  subgraph Acervo
+    C([Cadastrar obra])
+    L([Listar coleção])
+    B([Buscar por título ou autor/diretor])
+    D([Visualizar detalhes])
+    E([Editar obra])
+    X([Excluir obra com confirmação])
+  end
+  U --- C
+  U --- L
+  U --- B
+  U --- D
+  U --- E
+  U --- X

@@ -1,0 +1,10 @@
+erDiagram
+  ITEM_MIDIA {
+    BIGINT id PK "identity"
+    VARCHAR_255 titulo "NOT NULL"
+    VARCHAR_255 autor_diretor "NOT NULL"
+    INTEGER ano_lancamento "1 a 9999"
+    VARCHAR_100 genero "NOT NULL"
+    VARCHAR_2000 sinopse "NOT NULL"
+    VARCHAR_10 tipo_midia "LIVRO / FILME / SERIE"
+  }

@@ -1,0 +1,19 @@
+<%@ page pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Seu catálogo pessoal de livros, filmes e séries.">
+  <title><c:out value="${tituloPagina}"/> · Acervo</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/style.css">
+  <script defer src="${pageContext.request.contextPath}/assets/app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-header"><div class="container header-inner">
+  <a class="brand" href="${pageContext.request.contextPath}/itens"><span class="brand-icon" aria-hidden="true">a.</span> acervo<span class="brand-dot">.</span></a>
+  <nav aria-label="Navegação principal"><a href="${pageContext.request.contextPath}/itens">Meu catálogo</a><a class="button button-small" href="${pageContext.request.contextPath}/itens/novo">+ Adicionar item</a></nav>
+</div></header>
+<main id="conteudo" class="container">
+<c:if test="${not empty flash}"><div class="notice success" role="status"><c:out value="${flash}"/></div></c:if>
