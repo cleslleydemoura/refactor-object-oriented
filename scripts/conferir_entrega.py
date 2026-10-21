@@ -1,14 +1,20 @@
 """Confere integridade editorial e conteúdo do ZIP; não substitui maven verify."""
+import argparse
 import sys
 import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / ".tools"))
+sys.path.insert(0, str(ROOT / ".tools/doclibs"))
 from pypdf import PdfReader
 from docx import Document
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--somente-documentos", action="store_true",
+                        help="Confere Word/PDF sem exigir o pacote ZIP e a compilação.")
+    args = parser.parse_args()
     out = ROOT / "entrega"
     required = ["A Situação-Problema escolhida", "Objetivo", "Revisão de Conceito", "Metodologia", "Tempo", "Procedimento e material utilizado", "Resultado e discussão", "Nome:", "RGM:"]
     form = Document(out / "Projeto_Intervencao_Preenchido.docx")
@@ -27,6 +33,9 @@ def main():
     for path in out.glob("*.docx"):
         with zipfile.ZipFile(path) as document:
             if document.testzip() is not None: raise AssertionError("Word corrompido: " + path.name)
+    if args.somente_documentos:
+        print(f"APROVADO: {len(pdfs)} PDFs e {len(list(out.glob('*.docx')))} arquivos Word íntegros; formulário com todos os campos.")
+        return
     with zipfile.ZipFile(out / "catalogo.war") as war:
         entries = war.namelist()
         if war.testzip() is not None: raise AssertionError("WAR corrompido.")

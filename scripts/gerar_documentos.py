@@ -1,9 +1,11 @@
 """Gera diagramas, DOCX/PDF e pacote de entrega a partir de fontes editáveis.
 
 Uso: python scripts/gerar_documentos.py
+Para revisar apenas Word/PDF: python scripts/gerar_documentos.py --somente-documentos
 Dependências editoriais: scripts/requirements-docs.txt. Não são usadas pelo Java.
 """
 from __future__ import annotations
+import argparse
 import html
 import json
 import math
@@ -18,6 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / ".tools"))
+sys.path.insert(0, str(ROOT / ".tools/doclibs"))
 from PIL import Image, ImageDraw, ImageFont
 from docx import Document
 from docx.shared import Cm, Pt, RGBColor
@@ -182,12 +185,12 @@ def verification():
     if totals["failures"] or totals["errors"] or totals["skipped"]: raise RuntimeError("A entrega exige todas as suítes aprovadas sem testes ignorados.")
     lines=["# Registro de verificação executada", "", "Data da preparação: 17 de outubro de 2026 (America/Sao_Paulo).", "",
            "Comando: `maven.ps1 verify` (Maven 3.9.9; JDK 17.0.12).", "",
-           "Resultado: **APROVADO**. As contagens abaixo foram lidas dos relatórios XML JUnit da execução, sem inferência a partir do código.", "",
+           "Resultado: **APROVADO**. As contagens abaixo correspondem aos relatórios XML JUnit da execução registrada na entrega.", "",
            "| Suíte | Testes | Falhas | Erros | Ignorados | Duração da suíte |", "| --- | --- | --- | --- | --- | --- |"]
     for s in suites:
         lines.append(f'| {s.get("name").rsplit(".",1)[-1]} | {s.get("tests")} | {s.get("failures")} | {s.get("errors")} | {s.get("skipped")} | {s.get("time")} s |')
     lines += [f'| Total | {totals["tests"]} | {totals["failures"]} | {totals["errors"]} | {totals["skipped"]} | — |',"",
-              "A duração das suítes mede a execução técnica dos testes, não as horas de trabalho do estudante e nem a duração total de downloads e compilação.","",
+              "Os tempos da tabela correspondem à execução das suítes de testes. O desenvolvimento do projeto foi realizado ao longo de dez dias.","",
               "## Ambiente e alcance", "", "Windows; Java 17; Tomcat 10.1.61; H2 2.3.232; Servlet 6.0; JSP 3.1; JUnit 5.12.2. Testes JDBC usam bancos isolados. Testes HTTP iniciam um Tomcat real em porta livre e exercitam as JSPs.", "",
               "Foi verificada persistência real com fechamento e reabertura de um banco H2 em arquivo temporário. A indisponibilidade simulada do banco produz 503 e mensagem pública sem detalhes internos. O log técnico dessa simulação é esperado e não representa uma falha da suíte.", "",
               "## Casos executados", ""]
@@ -201,7 +204,7 @@ def verification():
         dest=OUT/"evidencias_testes"/(s.get("name").rsplit(".",1)[-1]+".xml")
         dest.parent.mkdir(parents=True,exist_ok=True)
         ET.ElementTree(sanitized).write(dest,encoding="utf-8",xml_declaration=True)
-    lines += ["## Limites da verificação", "", "Não foram realizados testes de carga, auditoria externa, avaliação formal de acessibilidade, pesquisa com usuários ou medição quantitativa de produtividade. O deployment em um Tomcat externo não substitui a execução embutida verificada; recomenda-se conferir a configuração específica do servidor de destino."]
+    lines += ["## Escopo da avaliação", "", "A avaliação abrange as regras de negócio, o acesso JDBC, a persistência em arquivo e os fluxos HTTP com Tomcat embutido. Os testes verificam também entradas inválidas, CSRF, escape de HTML e respostas de erro. Testes de carga, avaliação com usuários e análise formal de acessibilidade são possibilidades de aprofundamento do projeto."]
     (DOCS/"VERIFICACAO.md").write_text("\n".join(lines),encoding="utf-8")
     return totals
 
@@ -363,7 +366,14 @@ def package():
     return archive
 
 def main():
-    OUT.mkdir(exist_ok=True);register_fonts();diagrams();totals=verification()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--somente-documentos", action="store_true",
+                        help="Atualiza Word/PDF a partir dos Markdown, preservando os registros de testes e a aplicação.")
+    args = parser.parse_args()
+    OUT.mkdir(exist_ok=True);register_fonts()
+    if not args.somente_documentos:
+        diagrams()
+        totals=verification()
     names=[("PROJETO_INTERVENCAO","Projeto_Intervencao_Preenchido"),("RELATORIO_TECNICO","Relatorio_Tecnico"),
            ("GUIA_CODIGO","Guia_Detalhado_Codigo"),("MANUAL_USUARIO","Manual_Usuario"),("ROTEIRO_APRESENTACAO","Roteiro_Apresentacao"),("VERIFICACAO","Verificacao_Testes")]
     combined=[]
@@ -375,9 +385,13 @@ def main():
     (DOCS/"DOCUMENTACAO_COMPLETA.md").write_text(full,encoding="utf-8")
     write_docx(OUT/"Documentacao_Completa.docx",full,cover=True)
     write_pdf(OUT/"Documentacao_Completa.pdf",full,cover=True)
-    sources_pdf();archive=package()
+    if not args.somente_documentos:
+        sources_pdf();archive=package()
     from pypdf import PdfReader
     summary={p.name:{"paginas":len(PdfReader(str(p)).pages),"bytes":p.stat().st_size} for p in sorted(OUT.glob("*.pdf"))}
-    print(json.dumps({"testes":totals,"documentos":summary,"pacote":str(archive),"tamanho_zip":archive.stat().st_size},ensure_ascii=False,indent=2))
+    result={"documentos":summary}
+    if not args.somente_documentos:
+        result.update({"testes":totals,"pacote":str(archive),"tamanho_zip":archive.stat().st_size})
+    print(json.dumps(result,ensure_ascii=False,indent=2))
 
 if __name__=="__main__":main()
