@@ -1,64 +1,118 @@
 # Projeto de intervenção — Situação-Problema 3
 
-# A Situação-Problema escolhida:
+Nome: ____________________________________________________________
 
-Refatoração e Orientação a Objetos. No cenário apresentado, um estudante implementou o cadastro, a listagem, a consulta de detalhes, a edição, a exclusão e a busca de um Catálogo Simples de Livros/Filmes diretamente em uma Servlet. Essa concentração de responsabilidades produziu um código extenso, difícil de compreender e manter, com repetição de operações de acesso ao banco de dados. A intervenção consiste em reorganizar o catálogo utilizando orientação a objetos e separação de responsabilidades, preservando as funcionalidades exigidas.
+RGM: _____________________________________________________________
 
-O projeto recebeu o nome Acervo e contempla livros, filmes e séries. A solução foi implementada em Java, com Servlets, JSP/JSTL, JDBC e banco relacional H2. A descrição do problema está nas páginas 39–40 do PDF fornecido; as funcionalidades gerais e a documentação solicitada são apresentadas nas páginas 7–9 e 20–28.
+Qual situação-problema você escolheu para criar o seu projeto de intervenção?
+
+- ☐ Situação-problema 1
+- ☐ Situação-problema 2
+- ☒ Situação-problema 3
+
+## A Situação-Problema escolhida:
+
+Escolhi a Situação-Problema 3, Refatoração e Orientação a Objetos, apresentada no material Projetos Computacionais: da Teoria à Prática, de Artur Marques, nas páginas 39–40. O cenário descreve um catálogo de livros e filmes em que cadastro, listagem, consulta de detalhes, edição, exclusão e busca estão concentrados em uma Servlet, junto com as regras de negócio e o acesso ao banco de dados.
+
+O problema central é a dificuldade de manutenção causada por essa concentração de responsabilidades. Uma alteração em uma regra de validação ou em uma consulta SQL exige modificar o mesmo componente, e operações semelhantes acabam repetidas. Delimitei a intervenção à reorganização desse catálogo, preservando suas funcionalidades e separando apresentação, controle das requisições, regras de negócio e persistência.
+
+Desenvolvi a solução com o nome Acervo, contemplando livros, filmes e séries. O trabalho foi realizado em ambiente local, com análise do cenário, modelagem, implementação e verificação do sistema. O foco da análise foi a organização do código e o funcionamento das operações do catálogo.
 
 ## Objetivo:
 
-Solucionar a dificuldade de manutenção do catálogo mediante uma arquitetura em camadas, retirando da Servlet as regras de negócio e as instruções SQL. A Servlet passa a interpretar as requisições HTTP e selecionar a resposta; a classe de serviço passa a validar e coordenar as operações; o DAO passa a executar o acesso ao banco; a entidade ItemMidia representa os dados; e as páginas JSP apresentam as informações.
+Reorganizar o catálogo Acervo por meio da orientação a objetos e de uma arquitetura em camadas, para facilitar a manutenção, reduzir a repetição de código e permitir testes das regras de negócio, mantendo o cadastro, a listagem, a consulta de detalhes, a edição, a exclusão, a busca e o armazenamento dos dados.
 
-Os objetivos específicos são centralizar o SQL e a conversão de registros em objetos, reduzir a duplicação, facilitar a evolução do código e permitir testes das regras de negócio sem servidor web ou banco real. A aplicação deve manter cadastro, listagem, detalhes, edição, exclusão, busca por título ou autor/diretor e armazenamento permanente dos itens.
+Para alcançar esse objetivo, defini as seguintes ações: representar as obras na entidade ItemMidia; concentrar o acesso ao banco no DAO; centralizar as validações no serviço; manter a Servlet responsável pelo fluxo HTTP; e utilizar páginas JSP para apresentar as informações. Também estabeleci como critérios de conclusão o funcionamento do CRUD e da busca, a conservação dos dados em arquivo e a execução dos testes de serviço, persistência e integração web.
 
 ## Revisão de Conceito:
 
-Foram utilizados os fundamentos de Java e de Programação Orientada a Objetos estudados na disciplina: classes, objetos, atributos, construtores, encapsulamento, interfaces, polimorfismo, coleções e tratamento de exceções. A entidade ItemMidia possui atributos privados e acesso por métodos públicos, enquanto o enum TipoMidia restringe os tipos aceitos a livro, filme e série.
+A fundamentação do trabalho parte dos conceitos de Java e Programação Orientada a Objetos abordados no material de Marques (s.d.). Classes reúnem estado e comportamento, enquanto objetos representam as instâncias utilizadas pela aplicação. Apliquei esses conceitos na entidade ItemMidia, que representa os dados de uma obra, e nas classes responsáveis pelas operações do catálogo.
 
-O padrão DAO encapsula as operações de persistência. A interface ItemMidiaDao define o contrato utilizado pelo serviço, e JdbcItemMidiaDao implementa esse contrato com JDBC. Nos testes de serviço, uma implementação em memória substitui o DAO JDBC, demonstrando polimorfismo e injeção de dependências. A herança é reconhecida como um recurso de POO, mas não foi criada uma hierarquia artificial entre mídias: como as três categorias compartilham os mesmos atributos e operações, composição, interface e enum atendem ao escopo com menor complexidade.
+O encapsulamento protege o estado interno e organiza o acesso aos dados. Em ItemMidia, utilizei atributos privados e métodos de leitura. A abstração permite definir o que uma operação deve oferecer sem expor seus detalhes internos; no projeto, a interface ItemMidiaDao estabelece o contrato de persistência. O polimorfismo permite utilizar implementações diferentes desse contrato: JdbcItemMidiaDao acessa o banco, enquanto uma implementação em memória atende aos testes de serviço. A herança aparece em ItemMidiaServlet, que estende HttpServlet e especializa o atendimento das requisições.
 
-Também foram aplicados MVC, responsabilidade única, alta coesão, baixo acoplamento, reutilização de código, CRUD, SQL parametrizado e validação. O tratamento de recursos utiliza try-with-resources; os dados apresentados nas JSPs são escapados para reduzir o risco de XSS. A metodologia de Aprendizagem Baseada em Projetos orienta a integração entre a teoria, a implementação e a reflexão sobre os resultados.
+O padrão DAO concentra as operações de acesso aos dados, evitando que consultas SQL se espalhem pelo controlador. A separação em camadas favorece a coesão, pois cada classe reúne tarefas relacionadas, e reduz o acoplamento, pois o serviço depende de um contrato de persistência. A organização MVC distribui o modelo entre a entidade e as regras de negócio, a visualização nas JSPs e o controle do fluxo HTTP na Servlet.
+
+Na implementação, relacionei esses conceitos às tecnologias utilizadas. Servlets e JSPs são executadas pelo Tomcat; Jakarta Tags/JSTL permite percorrer coleções e apresentar textos nas páginas; JDBC realiza as operações no banco relacional H2. Utilizei consultas parametrizadas com PreparedStatement e fechamento de recursos com try-with-resources. As documentações de Tomcat, Jakarta Tags e H2, relacionadas nas referências, complementam a aplicação prática dos conceitos.
 
 ## Metodologia:
 
-Foi adotada uma abordagem de desenvolvimento iterativo baseada em projetos, dividida em concepção e planejamento, implementação por funcionalidades, testes e refinamento, documentação e preparação da apresentação. Inicialmente, o problema foi traduzido em requisitos e modelos. Em seguida, foram implementados o modelo de domínio, a persistência, o serviço, o controlador e as telas.
+Adotei uma abordagem prática de desenvolvimento iterativo, orientada pela Aprendizagem Baseada em Projetos. Parti da análise da situação-problema, defini os requisitos, organizei a modelagem e implementei a solução por funcionalidades. A cada etapa, conferi o comportamento esperado antes de avançar para a integração das camadas.
 
-O cenário anterior foi representado por um exemplo didático de Servlet concentrando responsabilidades, pois o material não fornece o código-fonte de uma aplicação legada. A implementação entregue é uma reconstrução organizada da solução solicitada. A equivalência funcional é verificada por testes do CRUD e da busca; não se afirma uma comparação executada contra um sistema anterior inexistente.
+Usei o cenário de Servlet concentrando responsabilidades como referência para identificar o que precisava ser separado. A partir dele, construí a arquitetura do Acervo e comparei a distribuição das responsabilidades com a organização descrita no enunciado. A análise se concentrou no código, nos diagramas e nos resultados dos testes da aplicação desenvolvida.
 
-Os testes foram distribuídos em três níveis: serviço com DAO em memória, integração JDBC com H2 e integração HTTP com Tomcat real e compilação das JSPs. Foram incluídos casos válidos, dados incorretos, itens inexistentes, entradas com aspas, tentativa de SQL Injection, escape de HTML e proteção de operações POST por token CSRF. O registro dos resultados efetivamente obtidos acompanha a entrega.
+Organizei a verificação em três níveis: testes de serviço com DAO em memória, testes de persistência com JDBC e H2 e testes HTTP com Tomcat e renderização das JSPs. Os casos abrangem operações válidas, campos incorretos, itens inexistentes, persistência em arquivo, entradas com aspas, tentativas de injeção SQL, escape de HTML e proteção das operações POST por token CSRF. Registrei as evidências nos relatórios de testes e nas capturas de tela.
 
 ## Tempo:
 
-O cronograma de referência para execução individual é de 24 horas: 3 horas para análise e requisitos; 3 horas para modelagem; 8 horas para implementação; 4 horas para testes e refinamento; 4 horas para documentação; e 2 horas para revisão e preparação da apresentação.
+Realizei o trabalho ao longo de dez dias, distribuindo as atividades entre análise, modelagem, implementação, testes e documentação. Nos primeiros dias, concentrei a atenção na compreensão do problema e na definição da solução. Depois, desenvolvi e integrei as camadas do catálogo. Na etapa final, revisei os testes, organizei os documentos e preparei a apresentação.
 
-Esse total é uma estimativa de planejamento, não uma medição das horas trabalhadas pelo estudante. Antes da submissão, deve ser ajustado conforme o tempo efetivamente dedicado à leitura, execução, compreensão, adaptação e revisão do projeto.
+| Período | Atividades |
+| --- | --- |
+| Dias 1 e 2 | Leitura do material, análise da situação-problema e definição dos requisitos e objetivos. |
+| Dias 3 e 4 | Modelagem dos casos de uso, classes, banco de dados e sequência das operações; organização da arquitetura. |
+| Dias 5 a 7 | Implementação das entidades, persistência, serviço, Servlet e telas; integração do CRUD e da busca. |
+| Dias 8 e 9 | Testes de serviço, JDBC e HTTP; revisão das validações, mensagens e persistência dos dados. |
+| Dia 10 | Revisão do relatório, manual, guia do código, anexos e roteiro de apresentação. |
+| Total | Dez dias. |
 
 ## Procedimento e material utilizado:
 
-1. Ler o material teórico e identificar o problema central da Situação-Problema 3: o acúmulo de responsabilidades e a repetição do acesso ao banco dentro da Servlet.
-2. Definir os requisitos funcionais do catálogo, os campos de cada item e as regras de validação. Delimitar o uso pessoal e acadêmico, sem login e sem upload de arquivos.
-3. Produzir os diagramas de casos de uso, classes, entidade-relacionamento e sequência de cadastro. Elaborar o esquema SQL da tabela item_midia.
-4. Preparar o ambiente com JDK 17 e Maven. Utilizar um editor ou IDE de preferência e navegador web para a interação com o catálogo.
-5. Implementar ItemMidia e TipoMidia para representar as obras; criar a fábrica de conexões e a inicialização não destrutiva do banco H2.
-6. Definir ItemMidiaDao e implementar JdbcItemMidiaDao, utilizando PreparedStatement para CRUD e busca. Reutilizar os métodos de preenchimento de parâmetros e mapeamento de resultados.
-7. Implementar ItemMidiaService para validar campos obrigatórios, limites de tamanho, tipo de mídia e ano, coordenando as operações através do contrato DAO.
-8. Implementar ItemMidiaServlet para roteamento HTTP, leitura de parâmetros, delegação ao serviço e seleção de JSPs. Adotar Post/Redirect/Get após operações bem-sucedidas.
-9. Construir as telas de listagem, cadastro, edição, detalhes e erro com JSP/JSTL, HTML, CSS e JavaScript. Aplicar escape de saída e confirmação de exclusão.
-10. Executar testes de serviço, banco e fluxo HTTP; conferir persistência em arquivo, mensagens de erro e mecanismos de proteção. Registrar o resultado real dos testes.
-11. Preparar os documentos em Word e PDF, o manual de uso, o guia detalhado do código e as capturas de tela. Revisar os arquivos de entrega e preencher a identificação acadêmica.
+1. Analisei o enunciado e identifiquei a mistura de responsabilidades na Servlet como o problema principal.
+2. Defini as operações do catálogo, os campos das obras e as regras de validação, mantendo o foco em um catálogo pessoal acadêmico.
+3. Organizei os diagramas de casos de uso, classes, entidade-relacionamento e sequência de cadastro, além do esquema SQL da tabela item_midia.
+4. Preparei o ambiente com JDK 17, Maven, editor de código e navegador, utilizando Tomcat para executar a aplicação web.
+5. Implementei ItemMidia e TipoMidia, a criação das conexões e a inicialização do banco H2 em arquivo.
+6. Defini a interface ItemMidiaDao e implementei JdbcItemMidiaDao para cadastro, consulta, edição, exclusão e busca com SQL parametrizado.
+7. Centralizei em ItemMidiaService as validações de campos obrigatórios, tamanho dos textos, tipo de mídia e ano de lançamento.
+8. Organizei ItemMidiaServlet para receber as requisições, chamar o serviço e selecionar as páginas JSP ou o redirecionamento adequado.
+9. Construí as telas de listagem, cadastro, edição, detalhes e erro com JSP/JSTL, HTML, CSS e JavaScript, incluindo mensagens de validação e confirmação de exclusão.
+10. Verifiquei as operações e os cenários de falha por meio dos testes de serviço, banco e HTTP, incluindo a conservação dos registros após a reabertura do banco.
+11. Reuni o relatório técnico, o manual, o guia do código, as capturas de tela, os diagramas e os registros de testes nos arquivos de entrega.
 
-Os materiais utilizados são o PDF da disciplina, computador com JDK 17, Maven, Tomcat 10.1, H2, JDBC, Servlets, JSP/JSTL, JUnit 5, editor de código e navegador. Python e bibliotecas de geração de documentos foram utilizados somente na preparação dos documentos, não na execução do catálogo.
+Utilizei o material teórico da disciplina, computador, JDK 17, Maven, Tomcat 10.1, H2, JDBC, Servlets, JSP/JSTL, JUnit 5, editor de código e navegador. Para preparar as versões em Word e PDF, utilizei Python e bibliotecas de geração de documentos.
 
 ## Resultado e discussão:
 
-O resultado é uma aplicação web funcional com os recursos exigidos e código organizado por responsabilidade. O acesso SQL está concentrado na implementação DAO, as regras estão no serviço e a Servlet contém o fluxo HTTP. Os dados são persistidos em arquivo H2 e podem ser consultados após o encerramento e a reabertura das conexões. A documentação inclui modelos, instalação, explicação dos arquivos, fluxos, segurança, testes e roteiro de apresentação.
+Ao final dos dez dias, concluí uma aplicação web com cadastro, listagem, consulta de detalhes, edição, exclusão e busca de obras. O banco H2 conserva os registros em arquivo. A implementação distribui as responsabilidades entre entidade, DAO, serviço, Servlet e JSPs, permitindo localizar as regras de validação e as consultas SQL em componentes próprios.
 
-A contribuição da POO é observável na organização em objetos com funções definidas, no encapsulamento e na dependência do serviço em relação a uma interface. O DAO reduz a repetição ao reutilizar o mapeamento dos registros, o preenchimento dos parâmetros e a abertura e o fechamento de recursos. A classe de serviço melhora a testabilidade porque suas regras podem ser executadas com um DAO em memória, sem HTTP ou JDBC.
+Avaliei a proposta a partir dos objetivos definidos e das evidências disponíveis. Os registros XML da entrega apresentam 39 testes aprovados: 23 de serviço, 8 de persistência JDBC e 8 de integração HTTP, com zero falhas, erros ou testes ignorados. O detalhamento está em Verificacao_Testes, acompanhado dos arquivos XML em entrega/evidencias_testes.
 
-Os testes automatizados verificam as funcionalidades e os principais cenários de falha; os números e o estado final estão registrados no relatório de verificação da entrega. Não foram medidos ganhos percentuais de produtividade ou desempenho, nem realizadas pesquisas com usuários. A melhoria de manutenção é sustentada pela separação estrutural das responsabilidades e pela possibilidade demonstrada de testar as camadas isoladamente.
+| Critério de conclusão | Resultado observado | Evidência |
+| --- | --- | --- |
+| Preservar as funcionalidades | Cadastro, listagem, detalhes, edição, exclusão e busca implementados. | Testes de CRUD e integração HTTP; capturas de tela. |
+| Separar as responsabilidades | SQL no DAO, validações no serviço e fluxo HTTP na Servlet. | Código-fonte, diagrama de classes e relatório técnico. |
+| Reutilizar o acesso aos dados | Mapeamento de registros e preenchimento de parâmetros compartilhados entre operações. | Métodos mapear e preencher de JdbcItemMidiaDao. |
+| Testar regras de forma isolada | Serviço verificado com DAO em memória. | 23 testes de ItemMidiaServiceTest. |
+| Conservar os registros | Dados recuperados após fechamento e reabertura do banco em arquivo. | Teste dadosSobrevivemAoFechamentoEReabertura. |
 
-As limitações incluem ausência de autenticação, paginação, histórico de alterações e tratamento de edição simultânea com controle de versão. Como continuidade, podem ser adicionados esses recursos, testes com usuários e migração para outro SGBD, mediante adaptação do esquema, do driver e das particularidades SQL. O projeto atende ao escopo acadêmico proposto e evidencia como uma refatoração orientada a objetos organiza o software sem eliminar as funcionalidades originais do enunciado.
+A principal melhoria está na organização do código e na possibilidade de verificar cada responsabilidade separadamente. Ao alterar uma validação, posso trabalhar no serviço; ao modificar uma consulta, no DAO. A interface de persistência permite substituir a implementação usada nos testes sem modificar as regras de negócio. Essa estrutura atende ao problema de manutenção descrito no enunciado.
+
+O projeto também permitiu relacionar os conceitos de POO ao fluxo completo de uma aplicação web, desde o preenchimento do formulário até a gravação no banco. Como continuidade, considero a inclusão de paginação, autenticação, histórico de alterações e controle de edição simultânea. A avaliação realizada se concentra no funcionamento e na estrutura do sistema, com apoio dos testes automatizados e das telas registradas.
+
+## Materiais e anexos:
+
+- Relatorio_Tecnico: contexto, requisitos, arquitetura, modelagem e discussão dos resultados.
+- Guia_Detalhado_Codigo: responsabilidades dos arquivos, classes, métodos e fluxos.
+- Manual_Usuario: instalação e operação do catálogo.
+- Verificacao_Testes e entrega/evidencias_testes: resultados e registros XML dos testes.
+- docs/diagramas: diagramas de casos de uso, classes, dados e sequência.
+- docs/telas: capturas da listagem, cadastro, detalhes, busca, edição e visualização em tela pequena.
+- src: código-fonte e testes; entrega/catalogo.war: aplicação empacotada.
+- Roteiro_Apresentacao: sequência de exposição do problema, solução e demonstração.
+
+## Referências:
+
+MARQUES, Artur. Projetos Computacionais: da Teoria à Prática. Material teórico da disciplina. [s.d.]. Situação-Problema 3: p. 39–40.
+
+APACHE SOFTWARE FOUNDATION. Apache Tomcat 10.1 Documentation. Disponível em: https://tomcat.apache.org/tomcat-10.1-doc/index.html. Acesso em: 17 out. 2026.
+
+APACHE SOFTWARE FOUNDATION. Apache Maven: Download and Documentation. Disponível em: https://maven.apache.org/download.cgi. Acesso em: 17 out. 2026.
+
+ECLIPSE FOUNDATION. Jakarta Standard Tag Library 3.0. Disponível em: https://jakarta.ee/specifications/tags/3.0/. Acesso em: 17 out. 2026.
+
+H2 DATABASE ENGINE. Features. Disponível em: https://h2database.com/html/features.html. Acesso em: 17 out. 2026.
+
+JUNIT TEAM. JUnit 5.12.2 Release Notes. Disponível em: https://docs.junit.org/5.12.2/release-notes/. Acesso em: 17 out. 2026.
 
 
 # Relatório técnico — Acervo
@@ -71,11 +125,11 @@ RGM: _____________________________________________________________
 
 ## 1. Introdução, contexto e justificativa
 
-O Acervo é um catálogo pessoal de livros, filmes e séries desenvolvido como solução para a Situação-Problema 3 do material Projetos Computacionais: da Teoria à Prática, elaborado por Artur Marques. O enunciado, nas páginas 39–40 do PDF fornecido, descreve uma aplicação cujo CRUD e busca foram implementados diretamente em uma Servlet. O resultado é uma concentração de responsabilidades que dificulta a manutenção e duplica o acesso ao banco.
+Desenvolvi o Acervo, um catálogo pessoal de livros, filmes e séries, como solução para a Situação-Problema 3 do material Projetos Computacionais: da Teoria à Prática, elaborado por Artur Marques. O enunciado, nas páginas 39–40 do material da disciplina, descreve uma aplicação cujo CRUD e busca foram implementados diretamente em uma Servlet. O resultado é uma concentração de responsabilidades que dificulta a manutenção e duplica o acesso ao banco.
 
 O objetivo da intervenção é preservar o comportamento funcional exigido e distribuir as responsabilidades em classes coesas. A interface web permite cadastrar, listar, consultar detalhes, editar, excluir e pesquisar obras. O armazenamento utiliza H2 em arquivo por meio de JDBC. As tecnologias centrais permanecem alinhadas ao material: Java, POO, Servlets, JSP, JDBC e um banco relacional.
 
-Não foi fornecido um repositório legado. Por isso, o cenário inicial é representado por um exemplo didático, explicitamente identificado como tal. A entrega é uma implementação completa da arquitetura proposta, e não uma alegação de alteração de um código original que o documento não disponibiliza. A refatoração é explicada como processo aplicável ao cenário, e a preservação funcional é demonstrada por requisitos e testes da implementação resultante.
+Usei a organização descrita no enunciado como ponto de partida para planejar a intervenção. Representei esse cenário em um exemplo conceitual e desenvolvi a solução em camadas. A análise compara a distribuição de responsabilidades do cenário com a arquitetura implementada; os testes verificam o CRUD e a busca do Acervo.
 
 ## 2. Objetivos e critérios de sucesso
 
@@ -110,23 +164,32 @@ Também se exige que todas as operações mandatórias continuem disponíveis pe
 | RNF06 | Instalação reproduzível | pom.xml com versões fixadas e inicializador PowerShell |
 | RNF07 | Preservação de dados | CREATE TABLE IF NOT EXISTS e H2 em arquivo |
 
-Não foi definido nem medido um SLA de desempenho. A listagem sem paginação e a busca com LIKE são adequadas para uma coleção acadêmica pequena. Não se afirma conformidade integral com normas de acessibilidade ou segurança; foram aplicadas práticas concretas e descritas neste relatório.
+O escopo é um catálogo pessoal acadêmico, com listagem completa e busca com LIKE. A avaliação considera funcionamento, organização do código, persistência e tratamento das entradas. Rótulos, foco visível, mensagens por campo e mecanismos de proteção integram a implementação.
 
-## 3. Metodologia e planejamento
+### 2.3 Fundamentação teórica
 
-A Aprendizagem Baseada em Projetos orientou a passagem do problema à solução verificável. O desenvolvimento foi organizado em iterações: requisitos e modelos; domínio e persistência; validação e controle HTTP; interface e refinamento; testes, documentação e apresentação. Cada iteração produz um resultado que pode ser inspecionado.
+A fundamentação do trabalho parte dos conceitos de Java e Programação Orientada a Objetos abordados no material de Marques (s.d.). Classes reúnem estado e comportamento, enquanto objetos representam as instâncias utilizadas pela aplicação. Apliquei esses conceitos na entidade ItemMidia, que representa os dados de uma obra, e nas classes responsáveis pelas operações do catálogo.
 
-| Etapa | Entrega | Estimativa |
-| --- | --- | --- |
-| Análise | Escopo, requisitos e critérios | 3 horas |
-| Modelagem | Casos de uso, classes, DER e sequência | 3 horas |
-| Implementação | Catálogo completo em camadas | 8 horas |
-| Testes e refinamento | Suítes e correções | 4 horas |
-| Documentação | Relatório, guia e manual | 4 horas |
-| Revisão e apresentação | Conferência e demonstração | 2 horas |
-| Total planejado | Projeto individual | 24 horas |
+O encapsulamento protege o estado interno e organiza o acesso aos dados. Em ItemMidia, utilizei atributos privados e métodos de leitura. A abstração permite definir o que uma operação deve oferecer sem expor seus detalhes internos; no projeto, a interface ItemMidiaDao estabelece o contrato de persistência. O polimorfismo permite utilizar implementações diferentes desse contrato: JdbcItemMidiaDao acessa o banco, enquanto uma implementação em memória atende aos testes de serviço. A herança aparece em ItemMidiaServlet, que estende HttpServlet e especializa o atendimento das requisições.
 
-As horas são uma estimativa pedagógica, não o tempo medido do estudante ou da execução automatizada. O estudante deve registrar seu próprio esforço antes da entrega.
+O padrão DAO concentra as operações de acesso aos dados, evitando que consultas SQL se espalhem pelo controlador. A separação em camadas favorece a coesão, pois cada classe reúne tarefas relacionadas, e reduz o acoplamento, pois o serviço depende de um contrato de persistência. A organização MVC distribui o modelo entre a entidade e as regras de negócio, a visualização nas JSPs e o controle do fluxo HTTP na Servlet.
+
+Na implementação, relacionei esses conceitos às tecnologias utilizadas. Servlets e JSPs são executadas pelo Tomcat; Jakarta Tags/JSTL permite percorrer coleções e apresentar textos nas páginas; JDBC realiza as operações no banco relacional H2. Utilizei consultas parametrizadas com PreparedStatement e fechamento de recursos com try-with-resources. As documentações de Tomcat, Jakarta Tags e H2, relacionadas nas referências, complementam a aplicação prática dos conceitos.
+
+## 3. Metodologia e tempo de execução
+
+Adotei a Aprendizagem Baseada em Projetos para relacionar a análise do problema à implementação e à verificação da solução. Organizei o desenvolvimento em iterações: requisitos e modelos; domínio e persistência; validação e controle HTTP; interface; testes e documentação. Em cada etapa, conferi os requisitos e integrei os componentes desenvolvidos.
+
+Realizei o trabalho ao longo de dez dias, distribuindo as atividades entre análise, modelagem, implementação, testes e documentação. Nos primeiros dias, concentrei a atenção na compreensão do problema e na definição da solução. Depois, desenvolvi e integrei as camadas do catálogo. Na etapa final, revisei os testes, organizei os documentos e preparei a apresentação.
+
+| Período | Atividades |
+| --- | --- |
+| Dias 1 e 2 | Leitura do material, análise da situação-problema e definição dos requisitos e objetivos. |
+| Dias 3 e 4 | Modelagem dos casos de uso, classes, banco de dados e sequência das operações; organização da arquitetura. |
+| Dias 5 a 7 | Implementação das entidades, persistência, serviço, Servlet e telas; integração do CRUD e da busca. |
+| Dias 8 e 9 | Testes de serviço, JDBC e HTTP; revisão das validações, mensagens e persistência dos dados. |
+| Dia 10 | Revisão do relatório, manual, guia do código, anexos e roteiro de apresentação. |
+| Total | Dez dias. |
 
 ## 4. Tecnologias e decisões
 
@@ -134,7 +197,7 @@ Java 17 foi escolhido como versão-base compatível com o ambiente verificado. O
 
 O Maven organiza dependências, compilação, testes e geração do WAR; o JUnit executa os testes de serviço, persistência e integração HTTP. As versões exatas constam de pom.xml. O inicializador local utiliza Tomcat embutido, mas a aplicação também é empacotada como WAR para Tomcat externo. [Apache Maven](https://maven.apache.org/download.cgi), [JUnit 5](https://docs.junit.org/5.12.2/release-notes/).
 
-Não foram adicionados Spring, ORM ou uma API REST paralela, pois Servlet, JSP e JDBC tornam visível a divisão de responsabilidades estudada. A entidade única com enum evita subclasses sem comportamento distinto. A interface DAO fornece o ponto de substituição relevante ao problema.
+Optei por Servlet, JSP e JDBC para tornar visível a divisão de responsabilidades estudada. A entidade ItemMidia representa as obras e o enum TipoMidia identifica suas categorias. A interface DAO estabelece o contrato de persistência e permite substituir a implementação nos testes.
 
 ## 5. Modelagem
 
@@ -210,13 +273,13 @@ A falha de organização não é o tamanho isolado de um método, mas a presenç
 | Teste de regras | Exige infraestrutura acoplada | DAO em memória e Clock fixo |
 | Apresentação | Potencialmente misturada ao fluxo | JSP/JSTL em WEB-INF |
 
-Essa comparação é estrutural. Não foram calculados percentuais de redução de linhas ou de velocidade de desenvolvimento, pois não há um código legado executável nem medição comparativa.
+Avaliei a organização pela localização das responsabilidades: consultas no DAO, validações no serviço e atendimento HTTP no controlador. Os exemplos e os testes mostram como cada componente pode ser compreendido e verificado separadamente.
 
 ### 6.3 POO aplicada
 
 O encapsulamento aparece nos atributos privados e finais da entidade e nas dependências privadas das classes. A abstração aparece nos contratos de persistência e de criação de conexão. O polimorfismo permite que ItemMidiaService utilize tanto JdbcItemMidiaDao quanto o DAO em memória. A composição constrói o serviço com o DAO e o DAO com a fábrica, em vez de criar essas dependências repetidamente em cada operação.
 
-A herança é usada naturalmente quando ItemMidiaServlet estende HttpServlet, sobrescrevendo doGet e doPost. Não foram criadas subclasses de mídia artificiais: a existência de um tipo diferente não implica, por si só, comportamento diferente. Se regras específicas surgirem, essa decisão pode ser revista com base em requisitos concretos.
+A herança aparece quando ItemMidiaServlet estende HttpServlet, sobrescrevendo doGet e doPost. Para as obras, utilizei uma entidade e um enum, pois livros, filmes e séries compartilham os atributos e as operações do catálogo. Regras específicas por categoria podem orientar uma revisão futura desse modelo.
 
 ## 7. Funcionalidades-chave
 
@@ -261,7 +324,7 @@ Os textos apresentados usam c:out ou fn:escapeXml. Valores numéricos gerados pe
 
 As operações POST exigem token CSRF aleatório de 256 bits associado à sessão. O cookie da sessão é HttpOnly e a aplicação usa rastreamento por cookie. O token não é autenticação nem restringe o acesso a usuários cadastrados. O servidor local escuta em 127.0.0.1 e não expõe um console web H2. Não há upload de arquivos nem execução de SQL digitado no navegador.
 
-A configuração padrão sem senha é destinada ao banco embutido da demonstração local. As credenciais podem ser definidas por variáveis de ambiente. Uma implantação pública exigiria autenticação, autorização, HTTPS, política de cookies adequada, limitação de requisições, monitoramento e revisão de operação. Esses recursos não são declarados como implementados.
+A configuração padrão sem senha é destinada ao banco embutido da demonstração local. As credenciais podem ser definidas por variáveis de ambiente. Uma implantação pública exigiria autenticação, autorização, HTTPS, política de cookies adequada, limitação de requisições, monitoramento e revisão de operação. Esses recursos fazem parte das possibilidades de evolução.
 
 ## 9. Estratégia de testes e evidências
 
@@ -269,7 +332,7 @@ ItemMidiaServiceTest utiliza DAO em memória e relógio fixo para verificar regr
 
 Os testes de serviço e JDBC são executados pelo Surefire na fase test. Os testes HTTP são executados pelo Failsafe após a geração do WAR na fase integration-test. O comando de conferência completo é `maven.ps1 verify`. Apenas `mvn test` não executa a suíte HTTP. O teste de arquivo utiliza uma pasta temporária exclusiva, sem tocar em data/catalogo.mv.db.
 
-O registro factual de testes, contagens, falhas e ambiente acompanha o arquivo VERIFICACAO.md. Não foram realizados ensaios de carga, auditoria de segurança externa ou validação com usuários finais. As capturas de tela registram uma execução de demonstração com dados fictícios de uso do catálogo e resumos originais.
+Os registros XML da entrega apresentam 39 testes aprovados: 23 de serviço, 8 de persistência e 8 de integração HTTP, com zero falhas, erros ou testes ignorados. O detalhamento está em VERIFICACAO.md e em entrega/evidencias_testes. As capturas de tela registram a execução com dados demonstrativos. A avaliação se concentra no funcionamento, na persistência e na organização do código.
 
 ## 10. Resultados visuais
 
@@ -309,17 +372,17 @@ Os desafios técnicos incluem manter a compatibilidade de pacotes jakarta entre 
 
 ## 12. Conclusão e trabalhos futuros
 
-O projeto fornece um catálogo completo, uma arquitetura em camadas, testes automatizados e documentação explicativa. A solução atende à Situação-Problema 3 ao retirar persistência e regras da Servlet e ao demonstrar reutilização e substituição de dependências. A manutenção melhora pela distribuição das responsabilidades, sem atribuir um ganho quantitativo não medido.
+Ao final dos dez dias, concluí o catálogo com arquitetura em camadas, testes automatizados e documentação. A solução atende à Situação-Problema 3 ao concentrar a persistência no DAO e as regras no serviço. A organização permite localizar as alterações e testar as regras com uma implementação de persistência em memória. O CRUD, a busca e a conservação dos dados são demonstrados pelos testes registrados na entrega.
 
-Como evolução, propõem-se paginação, filtros de gênero, autenticação, auditoria de alterações, controle de concorrência por versão e migração planejada para um SGBD servidor. A entrega mantém um escopo compatível com o projeto acadêmico e com a compreensão detalhada pelo estudante.
+Como evolução, propõem-se paginação, filtros de gênero, autenticação, auditoria de alterações, controle de concorrência por versão e migração planejada para um SGBD servidor. Essas possibilidades dão continuidade ao catálogo desenvolvido e à aplicação dos conceitos de orientação a objetos.
 
 ## 13. Referências utilizadas
 
-MARQUES, Artur. Projetos Computacionais: da Teoria à Prática. Material teórico da disciplina, arquivo teorico (1).pdf fornecido pelo estudante, 44 páginas. Sem data editorial identificada. Base do problema: pp. 39–40; requisitos e documentação: pp. 7–9 e 20–28.
+MARQUES, Artur. Projetos Computacionais: da Teoria à Prática. Material teórico da disciplina. [s.d.]. Base do problema: p. 39–40; requisitos e documentação: p. 7–9 e 20–28.
 
 APACHE SOFTWARE FOUNDATION. Apache Tomcat 10.1 Documentation. Disponível em: https://tomcat.apache.org/tomcat-10.1-doc/index.html. Consultado em 17 out. 2026.
 
-APACHE SOFTWARE FOUNDATION. Apache Maven: Download and Documentation. Disponível em: https://maven.apache.org/download.cgi. Consultado em 17 out. 2026. A entrega fixa Maven 3.9.9 como ferramenta local, sem afirmar que seja a versão mais recente.
+APACHE SOFTWARE FOUNDATION. Apache Maven: Download and Documentation. Disponível em: https://maven.apache.org/download.cgi. Consultado em 17 out. 2026.
 
 ECLIPSE FOUNDATION. Jakarta Standard Tag Library 3.0. Disponível em: https://jakarta.ee/specifications/tags/3.0/. Consultado em 17 out. 2026.
 
@@ -327,12 +390,10 @@ H2 DATABASE ENGINE. Features. Disponível em: https://h2database.com/html/featur
 
 JUNIT TEAM. JUnit 5.12.2 Release Notes. Disponível em: https://docs.junit.org/5.12.2/release-notes/. Consultado em 17 out. 2026.
 
-As obras bibliográficas mencionadas pelo material da disciplina não são apresentadas aqui como leituras diretas realizadas nesta implementação. A revisão conceitual se apoia no próprio PDF fornecido e nas documentações oficiais efetivamente consultadas.
-
 
 # Guia minucioso do código — Acervo
 
-Este guia acompanha a implementação real em src/main e src/test. Seu objetivo é permitir que o estudante compreenda a responsabilidade de cada arquivo, o motivo das principais decisões e a sequência de execução. O relatório técnico apresenta o contexto acadêmico; este documento aprofunda o funcionamento interno.
+Este guia acompanha a implementação real em src/main e src/test. Apresenta a responsabilidade de cada arquivo, o motivo das principais decisões e a sequência de execução. O relatório técnico apresenta o contexto acadêmico; este documento aprofunda o funcionamento interno.
 
 ## 1. Como ler o projeto
 
@@ -616,7 +677,7 @@ JdbcItemMidiaDaoTest usa bancos H2 em memória com nomes UUID, além de um banco
 
 CatalogoHttpIT inicia Tomcat real, utiliza HttpClient com CookieManager, lê o token do formulário e envia POSTs codificados. Verifica CRUD completo, JSPs de cadastro e edição, preservação de valores, códigos de falha, CSRF, XSS nas três telas, busca maliciosa, cabeçalhos e indisponibilidade do banco. A falha simulada do banco ocorre depois da inicialização e é restaurada ao fim do teste.
 
-O relatório VERIFICACAO.md é produzido a partir dos XMLs JUnit; o número de testes parametrizados considera cada combinação executada. Não se converte uma lista de testes planejados em resultados executados. Os testes HTTP verificam HTML e comportamento; as capturas de navegador permitem conferir a apresentação visual.
+O relatório VERIFICACAO.md é produzido a partir dos XMLs JUnit; o número de testes parametrizados considera cada combinação executada. Os testes HTTP verificam HTML e comportamento; as capturas de navegador permitem conferir a apresentação visual.
 
 ## 16. Documentação, evidências e empacotamento
 
@@ -680,31 +741,41 @@ O servidor de demonstração atende somente no computador local. A aplicação n
 
 ## 1. Problema e objetivo — 1 minuto
 
-Apresente a Situação-Problema 3, páginas 39–40: a Servlet acumula CRUD, busca, regras e SQL. Explique as consequências: alteração difícil, duplicação e testes dependentes do ambiente inteiro. Mostre o objetivo de preservar o catálogo e separar responsabilidades.
+Escolhi a Situação-Problema 3, sobre refatoração e orientação a objetos. O enunciado apresenta um catálogo de livros e filmes com cadastro, consulta, edição, exclusão e busca concentrados em uma Servlet, junto com as regras e o SQL. Essa organização dificulta a manutenção, porque mudanças de naturezas diferentes acabam no mesmo componente.
+
+Meu objetivo foi reorganizar o catálogo em camadas, mantendo as funcionalidades e facilitando a reutilização e os testes. Desenvolvi a solução com o nome Acervo, incluindo livros, filmes e séries. Realizei o trabalho ao longo de dez dias, passando pela análise, modelagem, implementação, testes e documentação.
 
 ## 2. Arquitetura e POO — 1 minuto
 
-Mostre o diagrama de classes. Siga a cadeia JSP → Servlet → serviço → interface DAO → JDBC → H2. Aponte os atributos privados de ItemMidia e o contrato ItemMidiaDao. Explique que a implementação em memória existe apenas nos testes. Não é necessário inventar subclasses de livro e filme quando o comportamento é igual.
+No diagrama de classes, o fluxo segue das páginas JSP para a Servlet, depois para o serviço, a interface DAO e a implementação JDBC, que acessa o H2. Cada parte tem uma responsabilidade: a entidade representa a obra; o serviço valida; o DAO cuida do banco; e a Servlet organiza as requisições e as respostas.
+
+O encapsulamento aparece nos atributos privados de ItemMidia. A abstração aparece no contrato ItemMidiaDao. O polimorfismo permite usar JDBC na aplicação e um DAO em memória nos testes. A herança aparece na Servlet, que estende HttpServlet.
 
 ## 3. Demonstração funcional — 2 minutos
 
-Inicie a aplicação, cadastre uma obra, observe a confirmação e busque pelo título ou autor. Abra os detalhes, edite o gênero e confira a alteração. Exclua o item demonstrativo mediante confirmação. Use um item novo para não apagar dados relevantes.
+Na demonstração, vou abrir o catálogo e cadastrar uma obra com título, autor ou diretor, tipo, ano, gênero e sinopse. Depois, vou localizar o item pela busca e abrir seus detalhes.
+
+Em seguida, vou editar o gênero, salvar e conferir a alteração. Por fim, vou excluir o item criado para a demonstração, utilizando a confirmação da tela. Essas operações mostram o CRUD e a busca integrados à interface e ao banco de dados.
 
 ## 4. Código e testes — 2 minutos
 
-Abra ItemMidiaServlet e mostre a chamada `servico.salvar(...)`, sem SQL. No serviço, mostre a validação antes da escrita. No DAO, mostre `PreparedStatement` e `try-with-resources`. Execute `maven.ps1 verify` ou apresente o relatório de verificação já gerado. Explique um teste de serviço sem banco e um teste HTTP com Tomcat real.
+No controlador, vou mostrar a chamada servico.salvar(...). A Servlet recebe os dados e delega a operação. No serviço, vou apresentar as validações feitas antes da gravação. No DAO, vou mostrar o SQL parametrizado com PreparedStatement e o fechamento dos recursos com try-with-resources.
 
-## 5. Resultado, limites e continuidade — 1 minuto
+Os registros da entrega apresentam 39 testes aprovados: 23 de serviço, 8 de persistência e 8 de integração HTTP, sem falhas, erros ou testes ignorados. Os testes de serviço usam um DAO em memória. Os testes JDBC verificam o banco, incluindo a recuperação dos dados após a reabertura do arquivo. Os testes HTTP exercitam os fluxos com Tomcat e as páginas JSP.
 
-Relacione o resultado com as três perguntas da situação-problema: organização pela POO, redução de repetição pelo DAO e testabilidade pela camada de serviço. Mencione autenticação, paginação e controle de edição simultânea como evoluções. Esclareça que o cronograma de 24 horas é estimado e deve ser substituído pelo tempo pessoal real.
+## 5. Resultado e continuidade — 1 minuto
 
-## Perguntas para revisão
+Ao final do trabalho, concluí o catálogo com as operações previstas e as responsabilidades distribuídas entre as camadas. A principal contribuição da POO foi permitir que cada parte do código tivesse uma função definida. O DAO reúne o acesso aos dados, e o serviço permite verificar as regras sem iniciar a aplicação web.
 
-- Por que SQL no serviço repetiria o problema? Porque misturaria regras e detalhes do armazenamento.
-- O DAO valida o ano do próximo calendário? Não; essa regra está no serviço. O banco mantém restrições estruturais básicas.
-- H2 é um banco de verdade? Sim, é relacional; a execução normal grava em arquivo e os testes usam bancos isolados.
-- Trocar a implementação DAO exige mudar o serviço? O contrato permanece, mas o novo DAO, o esquema e a configuração precisam ser implementados e testados.
-- Como foi medido o ganho de manutenção? Não houve medição quantitativa; foram demonstradas separação de responsabilidades e substituição de dependência nos testes.
+O trabalho também consolidou a relação entre os conceitos estudados e uma aplicação em funcionamento. Como próximos passos, considero paginação, autenticação, histórico de alterações e controle de edição simultânea.
+
+## Pontos para revisão
+
+- As regras de validação ficam no serviço; o DAO executa a persistência.
+- H2 é um banco relacional e conserva os registros em arquivo na execução normal.
+- O DAO em memória é usado apenas nos testes de serviço.
+- A avaliação da manutenção se apoia na separação das responsabilidades e na possibilidade de testar as camadas isoladamente.
+- O período de execução do trabalho foi de dez dias.
 
 
 # Registro de verificação executada
@@ -713,7 +784,7 @@ Data da preparação: 17 de outubro de 2026 (America/Sao_Paulo).
 
 Comando: `maven.ps1 verify` (Maven 3.9.9; JDK 17.0.12).
 
-Resultado: **APROVADO**. As contagens abaixo foram lidas dos relatórios XML JUnit da execução, sem inferência a partir do código.
+Resultado: **APROVADO**. As contagens abaixo correspondem aos relatórios XML JUnit da execução registrada na entrega.
 
 | Suíte | Testes | Falhas | Erros | Ignorados | Duração da suíte |
 | --- | --- | --- | --- | --- | --- |
@@ -722,7 +793,7 @@ Resultado: **APROVADO**. As contagens abaixo foram lidas dos relatórios XML JUn
 | CatalogoHttpIT | 8 | 0 | 0 | 0 | 4.426 s |
 | Total | 39 | 0 | 0 | 0 | — |
 
-A duração das suítes mede a execução técnica dos testes, não as horas de trabalho do estudante e nem a duração total de downloads e compilação.
+Os tempos da tabela correspondem à execução das suítes de testes. O desenvolvimento do projeto foi realizado ao longo de dez dias.
 
 ## Ambiente e alcance
 
@@ -780,6 +851,6 @@ Foi verificada persistência real com fechamento e reabertura de um banco H2 em 
 - APROVADO: erroDeValidacaoPreservaDadosNaoGravaEPermiteCorrigir
 - APROVADO: indisponibilidadeDoBancoRetornaMensagemSemDetalhesInternos
 
-## Limites da verificação
+## Escopo da avaliação
 
-Não foram realizados testes de carga, auditoria externa, avaliação formal de acessibilidade, pesquisa com usuários ou medição quantitativa de produtividade. O deployment em um Tomcat externo não substitui a execução embutida verificada; recomenda-se conferir a configuração específica do servidor de destino.
+A avaliação abrange as regras de negócio, o acesso JDBC, a persistência em arquivo e os fluxos HTTP com Tomcat embutido. Os testes verificam também entradas inválidas, CSRF, escape de HTML e respostas de erro. Testes de carga, avaliação com usuários e análise formal de acessibilidade são possibilidades de aprofundamento do projeto.

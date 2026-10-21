@@ -1,6 +1,6 @@
 # Guia minucioso do código — Acervo
 
-Este guia acompanha a implementação real em src/main e src/test. Seu objetivo é permitir que o estudante compreenda a responsabilidade de cada arquivo, o motivo das principais decisões e a sequência de execução. O relatório técnico apresenta o contexto acadêmico; este documento aprofunda o funcionamento interno.
+Este guia acompanha a implementação real em src/main e src/test. Apresenta a responsabilidade de cada arquivo, o motivo das principais decisões e a sequência de execução. O relatório técnico apresenta o contexto acadêmico; este documento aprofunda o funcionamento interno.
 
 ## 1. Como ler o projeto
 
@@ -284,7 +284,7 @@ JdbcItemMidiaDaoTest usa bancos H2 em memória com nomes UUID, além de um banco
 
 CatalogoHttpIT inicia Tomcat real, utiliza HttpClient com CookieManager, lê o token do formulário e envia POSTs codificados. Verifica CRUD completo, JSPs de cadastro e edição, preservação de valores, códigos de falha, CSRF, XSS nas três telas, busca maliciosa, cabeçalhos e indisponibilidade do banco. A falha simulada do banco ocorre depois da inicialização e é restaurada ao fim do teste.
 
-O relatório VERIFICACAO.md é produzido a partir dos XMLs JUnit; o número de testes parametrizados considera cada combinação executada. Não se converte uma lista de testes planejados em resultados executados. Os testes HTTP verificam HTML e comportamento; as capturas de navegador permitem conferir a apresentação visual.
+O relatório VERIFICACAO.md é produzido a partir dos XMLs JUnit; o número de testes parametrizados considera cada combinação executada. Os testes HTTP verificam HTML e comportamento; as capturas de navegador permitem conferir a apresentação visual.
 
 ## 16. Documentação, evidências e empacotamento
 

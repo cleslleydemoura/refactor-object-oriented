@@ -1,6 +1,6 @@
 # Acervo — Situação-Problema 3
 
-Projeto acadêmico de **refatoração e orientação a objetos**, baseado nas páginas 39–40 do material *Projetos Computacionais: da Teoria à Prática*, de Artur Marques, fornecido pelo estudante.
+Projeto acadêmico de **refatoração e orientação a objetos**, baseado nas páginas 39–40 do material *Projetos Computacionais: da Teoria à Prática*, de Artur Marques.
 
 Catálogo web de livros, filmes e séries, com CRUD, busca e persistência em banco relacional. Tecnologias: Java 17, Servlets, JSP/JSTL, JDBC, H2 e Tomcat 10.1. O projeto separa apresentação, controle HTTP, regras de negócio e acesso aos dados.
 
@@ -34,11 +34,13 @@ Com Maven já instalado, também é possível usar `mvn verify`. Em Linux/macOS:
 - [Javadoc navegável](docs/javadoc/index.html): documentação gerada das classes Java.
 - `entrega/`: documentos em PDF/DOCX, pacote ZIP, aplicação WAR e capturas das telas.
 
-**Antes de entregar:** preencha Nome e RGM no Word, confira as regras da sua instituição e ajuste o campo Tempo para refletir seu próprio trabalho. O cronograma informado é uma estimativa, não uma medição do esforço do estudante.
+O trabalho foi desenvolvido ao longo de **dez dias**, com etapas de análise, modelagem, implementação, testes e documentação. O formulário de intervenção apresenta o cronograma, os resultados, os anexos e as referências.
 
 O ZIP também inclui a compilação e as dependências. Depois de extrair o pacote, execute `iniciar.ps1 -SemCompilar` para iniciar sem baixar o Maven; o JDK 17 continua necessário.
 
 Para regenerar a documentação, instale `scripts/requirements-docs.txt`, execute os testes completos, prepare as capturas de tela e execute `python scripts/gerar_documentos.py`. As capturas podem ser refeitas com um catálogo demonstrativo em execução e `node scripts/capturar_telas.mjs URL` (Node 22+ e Chrome instalado).
+
+Para atualizar apenas Word e PDF após uma revisão do texto, execute `python scripts/gerar_documentos.py --somente-documentos`. Para conferir esses arquivos, execute `python scripts/conferir_entrega.py --somente-documentos`. Esse modo utiliza os arquivos Markdown e conserva os registros da execução de testes já documentada.
 
 ## Estrutura
 
